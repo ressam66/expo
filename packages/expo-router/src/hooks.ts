@@ -74,7 +74,7 @@ export function useRouter(): Router {
       canDismiss: store.canDismiss,
       back: store.goBack,
       replace: store.replace,
-      setParams: store.setParams,
+      setParams: store.setParams as Router['setParams'],
       canGoBack: store.canGoBack,
       navigate: store.navigate,
       reload: store.reload,
