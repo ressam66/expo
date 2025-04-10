@@ -52,6 +52,7 @@ function checkSortByKey(sortBy) {
     }
 }
 function sortByOptionToString(sortBy) {
+    checkSortBy(sortBy);
     if (Array.isArray(sortBy)) {
         return `${sortBy[0]} ${sortBy[1] ? 'ASC' : 'DESC'}`;
     }
@@ -405,10 +406,11 @@ export async function getAssetsAsync(assetsOptions = {}) {
     if (first != null && first < 0) {
         throw new Error('Option "first" must be a positive integer!');
     }
-    options.sortBy.forEach(checkSortBy);
     options.mediaType.forEach(checkMediaType);
-    options.sortBy = options.sortBy.map(sortByOptionToString);
-    return await MediaLibrary.getAssetsAsync(options);
+    return await MediaLibrary.getAssetsAsync({
+        ...options,
+        sortBy: options.sortBy.map(sortByOptionToString),
+    });
 }
 // @needsAudit
 /**
